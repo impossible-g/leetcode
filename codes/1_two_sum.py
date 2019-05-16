@@ -12,6 +12,8 @@ class Solution:
             try:
                 index_1 = i
                 index_2 = nums_dict[other_num]
+                if index_1 == index_2:
+                    continue
                 break
             except KeyError as e:
                 continue
@@ -23,7 +25,7 @@ class Solution:
 
 
 if __name__ == '__main__':
-    n = [2, 7, 11, 15]
-    t = 9
+    n = [3, 2, 4]
+    t = 6
     s = Solution()
     print(s.twoSum(n, t))
