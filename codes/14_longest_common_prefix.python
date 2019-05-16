@@ -1,0 +1,43 @@
+# _*_coding:utf-8_*_
+# __author: {a123456}
+class Solution:
+    def longestCommonPrefix(self, strs: [str]) -> str:
+        length = len(strs)
+        ret_str = ''
+        if length:
+            one_str = strs[0]
+            one_s = ret_str
+
+            right = 0
+            while 1:
+                flag = True
+                len_flag = True
+                for j in strs:
+                    if not j.startswith(one_s) or not j:
+                        flag = False
+                        break
+
+                    if len(j) == len(one_s):
+                        len_flag = False
+
+                if flag:
+                    right += 1
+
+                    if not len_flag:
+                        ret_str = one_str[:right - 1]
+                        break
+
+                    one_s = one_str[:right]
+                else:
+                    r = right - 1
+                    if r > 0:
+                        ret_str = one_str[:r]
+                    break
+
+        return ret_str
+
+
+if __name__ == '__main__':
+    s = Solution()
+    l = ["dog", "racecar", "car"]
+    print(s.longestCommonPrefix(l))
