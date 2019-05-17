@@ -1,10 +1,7 @@
 # _*_coding:utf-8_*_
 # __author: a123456
 # Definition for singly-linked list.
-class ListNode:
-    def __init__(self, x):
-        self.val = x
-        self.next = None
+from utils.generate_list_node import ListNode, generate_list_node
 
 
 class Solution:
@@ -103,19 +100,6 @@ class Solution:
             pre = cur
             cur = temp
         return pre
-
-
-def generate_list_node(li):
-    ln = None
-    cur = None
-    for i, v in enumerate(li):
-        if not i:
-            ln = ListNode(v)
-            cur = ln
-        else:
-            cur.next = ListNode(v)
-            cur = cur.next
-    return ln
 
 
 def print_li(li):
