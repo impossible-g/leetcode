@@ -1,7 +1,7 @@
 # _*_coding:utf-8_*_
 # __author: a123456
 # Definition for singly-linked list.
-from utils.generate_list_node import ListNode, generate_list_node
+from utils.utils import ListNode, generate_list_node
 
 
 class Solution:

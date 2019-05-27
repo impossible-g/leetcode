@@ -1,6 +1,6 @@
 # _*_coding:utf-8_*_
 # __author: {a123456}
-from utils.generate_list_node import generate_list_node, ListNode
+from utils.utils import generate_list_node, ListNode
 
 
 class Solution:
