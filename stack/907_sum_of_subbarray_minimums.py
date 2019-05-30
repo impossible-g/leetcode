@@ -25,5 +25,7 @@ class Solution:
 
 if __name__ == '__main__':
     s = Solution()
-    A = [3, 1, 2, 4]
+    A = [1, 2]
+    # [[1, 1, 2],
+    #  [2, 1, 1]]
     print(s.sumSubarrayMins(A))
