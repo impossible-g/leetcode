@@ -1,20 +1,18 @@
 # _*_coding:utf-8_*_
 # __author: {a123456}
-import heapq
-
-
 class StockSpanner:
-    """
-    维护一个递减栈，如果当前值比栈顶大，则循环查找到下一个比当前值大的元素
-
-    """
-
     def __init__(self):
-        self.heap = []  # [[price, n]]
+        self.stack = []
 
     def next(self, price: int) -> int:
-        heapq.heappush(self.heap, price)
-        print(self.heap)
+        n = 1
+
+        while self.stack and price >= self.stack[-1][0]:
+            _, num = self.stack.pop()
+            n += num
+
+        self.stack.append([price, n])
+        return n
 
 
 # Your StockSpanner object will be instantiated and called as such:
@@ -23,6 +21,6 @@ class StockSpanner:
 
 if __name__ == '__main__':
     s = StockSpanner()
-    l = [100, 80, 60, 70, 60, 75, 70]
+    l = [100, 80, 60, 70, 60, 75, 85]
     for i in l:
         print(s.next(i))
