@@ -96,4 +96,130 @@ class LinkedList:
         self.head = pre
 
 
+class DLinkList:
+    def __init__(self, li):
+        self.length = 0
+        self.head = self.init_list(li)
+        self.iter_reverse = 0
 
+    def __iter__(self):
+        cur = self.head if not self.iter_reverse else self.head.prev
+
+        i = 0
+        while i < len(self):
+            i += 1
+            yield cur.val
+            cur = cur.next if not self.iter_reverse else cur.prev
+
+    def __contains__(self, item):
+        flag = False
+        cur = self.head
+        i = 0
+
+        while i < len(self):
+            if cur.val == item:
+                flag = True
+                break
+            cur = self.head.next
+
+        return flag
+
+    def __len__(self):
+        return self.length
+
+    def __getitem__(self, index):
+        cur = self.head
+
+        i = 0
+        while i < index:
+            cur = cur.next
+            i += 1
+
+        return cur
+
+    def __bool__(self):
+        return self.head is None
+
+    def _get_cur_pre(self, index):
+        cur = self.head
+        pre = None
+
+        i = 0
+        while i < index:
+            pre = cur
+            cur = cur.next
+            i += 1
+
+        return cur, pre
+
+    def _init_new_node(self, val, pre, cur):
+        node = Node(val)
+        node.prev = pre
+        node.next = cur
+        cur.prev = node
+        pre.next = node
+
+        self.length += 1
+        return node
+
+    def init_list(self, li):
+        self.length = 1
+        head = Node(li[0])
+        cur = head
+        pre = None
+
+        for val in li[1:]:
+            self.length += 1
+
+            node = Node(val)
+            cur.prev = pre
+            cur.next = node
+            pre = cur
+            cur = cur.next
+
+        cur.next = head
+        cur.prev = pre
+        head.prev = cur
+        return head
+
+    def insert(self, index, val):
+        if index == 0:
+            self.add(val)
+            return
+
+        cur, pre = self._get_cur_pre(index)
+
+        self._init_new_node(val, pre, cur)
+
+    def add(self, val):
+        cur = self.head
+        pre = self.head.prev
+
+        self.head = self._init_new_node(val, pre, cur)
+
+    def append(self, val):
+        cur = self.head
+        pre = cur.prev
+
+        self._init_new_node(val, pre, cur)
+
+    def pop(self, index):
+        cur, pre = self._get_cur_pre(index)
+        pre.next = cur.next
+        cur.next.prev = pre
+
+        cur.next = None
+        cur.prev = None
+
+        self.length -= 1
+        return cur
+
+
+if __name__ == '__main__':
+    nums = [1, 2, 3, 4, 5]
+    head = DLinkList(nums)
+    for n in head:
+        print(n)
+
+    head.insert(0, 0)
+    print(head[1].val)
