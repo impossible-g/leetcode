@@ -218,8 +218,11 @@ class DLinkList:
 if __name__ == '__main__':
     nums = [1, 2, 3, 4, 5]
     head = DLinkList(nums)
-    for n in head:
-        print(n)
 
     head.insert(0, 0)
     print(head[1].val)
+    for i in range(3):
+        a = hash('[1, "2", ]')
+        print(a)
+        a = hash('[1, "2" ]')
+        print(a)
