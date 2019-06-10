@@ -28,19 +28,21 @@ class Node:
 
 
 class LinkedList:
+    """单向链表"""
+
     def __init__(self, li: []):
         self.length = 0
-        self.head = self.init_list(li)
+        self.root = self.init_list(li)
 
     def __iter__(self):
-        cur = self.head
+        cur = self.root
 
         while cur:
             yield cur.val
             cur = cur.next
 
     def _get_cur_pre(self, index):
-        cur = self.head
+        cur = self.root
         pre = None
 
         i = 0
@@ -53,8 +55,8 @@ class LinkedList:
 
     def init_list(self, li):
         self.length = 1
-        head = Node(li[0])
-        cur = head
+        root = Node(li[0])
+        cur = root
 
         for val in li[1:]:
             self.length += 1
@@ -62,10 +64,10 @@ class LinkedList:
             cur.next = node
             cur = cur.next
 
-        return head
+        return root
 
     def is_empty(self):
-        return self.head is None
+        return self.root is None
 
     def get_length(self):
         return self.length
@@ -85,7 +87,7 @@ class LinkedList:
 
     def reverse(self):
         pre = None
-        cur = self.head
+        cur = self.root
 
         while cur:
             next_node = cur.next
@@ -93,17 +95,19 @@ class LinkedList:
             pre = cur
             cur = next_node
 
-        self.head = pre
+        self.root = pre
 
 
 class DLinkList:
+    """循环链表"""
+
     def __init__(self, li):
         self.length = 0
-        self.head = self.init_list(li)
+        self.root = self.init_list(li)
         self.iter_reverse = 0
 
     def __iter__(self):
-        cur = self.head if not self.iter_reverse else self.head.prev
+        cur = self.root if not self.iter_reverse else self.root.prev
 
         i = 0
         while i < len(self):
@@ -113,14 +117,14 @@ class DLinkList:
 
     def __contains__(self, item):
         flag = False
-        cur = self.head
+        cur = self.root
         i = 0
 
         while i < len(self):
             if cur.val == item:
                 flag = True
                 break
-            cur = self.head.next
+            cur = self.root.next
 
         return flag
 
@@ -128,7 +132,7 @@ class DLinkList:
         return self.length
 
     def __getitem__(self, index):
-        cur = self.head
+        cur = self.root
 
         i = 0
         while i < index:
@@ -138,10 +142,10 @@ class DLinkList:
         return cur
 
     def __bool__(self):
-        return self.head is None
+        return self.root is None
 
     def _get_cur_pre(self, index):
-        cur = self.head
+        cur = self.root
         pre = None
 
         i = 0
@@ -164,8 +168,8 @@ class DLinkList:
 
     def init_list(self, li):
         self.length = 1
-        head = Node(li[0])
-        cur = head
+        root = Node(li[0])
+        cur = root
         pre = None
 
         for val in li[1:]:
@@ -177,10 +181,10 @@ class DLinkList:
             pre = cur
             cur = cur.next
 
-        cur.next = head
+        cur.next = root
         cur.prev = pre
-        head.prev = cur
-        return head
+        root.prev = cur
+        return root
 
     def insert(self, index, val):
         if index == 0:
@@ -192,13 +196,13 @@ class DLinkList:
         self._init_new_node(val, pre, cur)
 
     def add(self, val):
-        cur = self.head
-        pre = self.head.prev
+        cur = self.root
+        pre = self.root.prev
 
-        self.head = self._init_new_node(val, pre, cur)
+        self.root = self._init_new_node(val, pre, cur)
 
     def append(self, val):
-        cur = self.head
+        cur = self.root
         pre = cur.prev
 
         self._init_new_node(val, pre, cur)
@@ -215,12 +219,24 @@ class DLinkList:
         return cur
 
 
+class TreeNode:
+    def __init__(self, val):
+        self.val = val
+        self.left = None
+        self.right = None
+
+
+class Tree:
+    def __init__(self):
+        self.root = TreeNode("root")
+
+
 if __name__ == '__main__':
     nums = [1, 2, 3, 4, 5]
-    head = DLinkList(nums)
+    root = DLinkList(nums)
 
-    head.insert(0, 0)
-    print(head[1].val)
+    root.insert(0, 0)
+    print(root[1].val)
     for i in range(3):
         a = hash('[1, "2", ]')
         print(a)
