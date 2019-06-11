@@ -219,26 +219,52 @@ class DLinkList:
         return cur
 
 
-class TreeNode:
-    def __init__(self, val):
-        self.val = val
-        self.left = None
-        self.right = None
+class TrieNode:
+    """字典树"""
 
-
-class Tree:
     def __init__(self):
-        self.root = TreeNode("root")
+        self.nodes = {}
+
+    def __contains__(self, word: str):
+        """判断字符串在不在字典树中"""
+        cur_map = self.nodes
+        result = True
+
+        for char in word:
+            if char in cur_map:
+                cur_map = cur_map[char]
+            else:
+                result = False
+                break
+
+        if "" not in cur_map:
+            result = False
+
+        return result
+
+    def insert(self, word: str):
+        cur_map = self.nodes
+
+        for char in word:
+            if char not in cur_map:
+                cur_map[char] = {}
+            cur_map = cur_map[char]
+
+        cur_map[""] = ""
+
+    def insert_many(self, words: [str]):
+        for word in words:
+            self.insert(word)
+
+    @staticmethod
+    def test():
+        t = TrieNode()
+        t.insert("abc")
+        print("ab" in t)
+        t.insert("ab")
+        print("ab" in t)
+        return t
 
 
 if __name__ == '__main__':
-    nums = [1, 2, 3, 4, 5]
-    root = DLinkList(nums)
-
-    root.insert(0, 0)
-    print(root[1].val)
-    for i in range(3):
-        a = hash('[1, "2", ]')
-        print(a)
-        a = hash('[1, "2" ]')
-        print(a)
+    TrieNode.test()
