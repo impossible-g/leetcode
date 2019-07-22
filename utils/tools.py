@@ -326,6 +326,117 @@ class Heap:
         print(heap.data_list)
 
 
+class Graph1:
+    """无向图---> 邻接表实现"""
+
+    def __init__(self):
+        self.nodes = set()  # 图的点集
+        self.edge = {}  # 图的边集
+
+    def initialize_node(self, node):
+        # 初始化点
+        self.nodes.add(node)
+        self.edge[node] = set()
+
+    def insert(self, a, b):
+        if a not in self.nodes: self.initialize_node(a)
+
+        if b not in self.nodes: self.initialize_node(b)
+
+        self.edge[a].add(b)
+        self.edge[b].add(a)
+
+    def succ(self, a):
+        return self.edge[a]
+
+    def show_nodes(self):
+        print(self.nodes)
+
+    def show_edge(self):
+        print(self.edge)
+
+    @classmethod
+    def test(cls):
+        graph = cls()
+        graph.insert('0', '1')
+        graph.insert('0', '2')
+        graph.insert('0', '3')
+        graph.insert('1', '3')
+        graph.insert('2', '3')
+        graph.show_edge()
+
+
+class Graph2:
+    def __init__(self, vertex):
+        self.vertex = vertex
+        self.graph = [[0] * vertex for i in range(vertex)]
+
+    def insert(self, a, b):
+        self.graph[a - 1][b - 1] = 1
+        self.graph[b - 1][a - 1] = 1
+
+    def show(self):
+        for i in self.graph:
+            for j in i:
+                print(j, end=" ")
+            print()
+
+    @classmethod
+    def test(cls):
+        graph = cls(5)
+        graph.insert(1, 4)
+        graph.insert(4, 2)
+        graph.insert(4, 5)
+        graph.insert(2, 5)
+        graph.insert(5, 3)
+        graph.show()
+
+
+def dfs(graph, start):
+    """深度优先"""
+    explored, stack = [start], [start]  # explored：已经遍历的节点列表，stack:寻找待遍历的节点栈
+
+    while stack:
+        v = stack.pop()
+
+        # 遍历点
+        for i in graph[v]:
+            # 如果点不在已遍历列表，则遍历这个点
+            if i not in explored:
+                stack.append(i)
+                explored.append(i)
+
+    return explored
+
+
+def bfs(graph, start):
+    """广度优先"""
+    explored, queue = [start], [start]  # explored：已经遍历的节点列表，stack:寻找待遍历的节点栈
+
+    while queue:
+        v = queue.pop(0)
+
+        for i in graph[v]:
+            if i not in explored:
+                queue.append(i)
+                explored.append(i)
+
+    return explored
+
+
+G = {'0': ['1'],
+     '1': ['3'],
+     '2': ['1'],
+     '3': ['2', '4'],
+     '4': ['5'],
+     '5': ['7'],
+     '6': ['4'],
+     '7': ['6']}
 if __name__ == '__main__':
     TrieNode.test()
     Heap.test()
+    Graph1.test()
+    Graph2.test()
+    g = {'0': {'3', '2', '1'}, '1': {'3', '0'}, '2': {'3', '0'}, '3': {'2', '1', '0'}}
+    print(dfs(G, "0"))
+    print(bfs(G, "0"))
