@@ -56,7 +56,7 @@ class LinkList:
         random.shuffle(data)
 
         for i in data:
-            [print(j, end="  ") for j in i]
+            [print(j if random.choice([2, 1, 0]) > 0 else " ", end="  ") for j in i]
             print()
 
         return data
